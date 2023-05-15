@@ -1,93 +1,70 @@
-# terriblyassignment
-Detaial explanation of code i have commented that part.
-import React, { useState } from 'react';
-import Chart from 'chart.js';
+# Getting Started with Create React App
 
-const WordFrequencyApp = () => {
-  const [wordFrequency, setWordFrequency] = useState({});
-  const [csvData, setCsvData] = useState('');
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-  const fetchWordFrequency = async () => {
-    try {
-      const response = await fetch('https://www.terriblytinytales.com/test.txt');
-      const content = await response.text();
+## Available Scripts
 
-      // Parse the content and calculate word frequency
-      const words = content.split(/\s+/);
-      const frequency = {};
-      words.forEach((word) => {
-        frequency[word] = frequency[word] ? frequency[word] + 1 : 1;
-      });
+In the project directory, you can run:
 
-      // Sort the word frequency in descending order
-      const sortedWords = Object.keys(frequency).sort(
-        (a, b) => frequency[b] - frequency[a]
-      );
+### `npm start`
 
-      // Take the top 20 most occurring words
-      const topWords = sortedWords.slice(0, 20);
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-      // Create data for the histogram
-      const histogramData = topWords.map((word) => frequency[word]);
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-      // Update state with word frequency data
-      setWordFrequency(frequency);
+### `npm test`
 
-      // Generate CSV data
-      const csvContent = `Word,Frequency\n${topWords
-        .map((word) => `${word},${frequency[word]}`)
-        .join('\n')}`;
-      setCsvData(csvContent);
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-      // Plot the histogram
-      const ctx = document.getElementById('chart').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: topWords,
-          datasets: [
-            {
-              label: 'Word Frequency',
-              data: histogramData,
-              backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              stepSize: 1,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      console.log('Error fetching word frequency:', error);
-    }
-  };
+### `npm run build`
 
-  const handleExport = () => {
-    const element = document.createElement('a');
-    const file = new Blob([csvData], { type: 'text/csv' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'word_frequency.csv';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-  return (
-    <div>
-      <button onClick={fetchWordFrequency}>Submit</button>
-      <div>
-        <canvas id="chart" width="400" height="300"></canvas>
-      </div>
-      <button onClick={handleExport}>Export</button>
-    </div>
-  );
-};
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-export default WordFrequencyApp;
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
